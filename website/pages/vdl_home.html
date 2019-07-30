@@ -1,0 +1,453 @@
+<style>
+        #topCharts {
+            padding: 18px;
+        }
+    
+        #topCharts>div>div>svg {
+            display: block;
+            height: 280px;
+        }
+    
+        .chartWrapper {
+            border: solid 1px #c7c7c7;
+            border-radius: 5px;
+            padding: 5px;
+            margin-bottom: 18px;
+        }
+    
+        .chartLabel {
+            font-size: 1.2em;
+            text-align: center;
+            padding: 4px;
+        }
+        .chartHolder {
+        }
+    </style>
+    
+    <div class="content">
+        <div class="container-fluid">
+            <div class="navbar-wrapper">
+                <a class="navbar-brand">Vidulum</a>
+                        <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="margin-left: 80%;">
+           <i class="fa fa-rocket"></i>&nbsp How to Connect 
+    </button> 
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Vidulum Connection Info</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  </div>
+                  <div class="modal-body">
+                        <p class="card-category">Ports</p>
+                        <h3 class="card-title"><small><span id="connectionPorts">-</span></small></h3>
+                  </div>
+                  <div class="modal-footer">
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="card card-stats">
+                        <div class="card-header card-header-success card-header-icon">
+                            <div class="card-icon">
+                                <i class="material-icons">trending_up</i></div>
+                            <p class="card-category">Network Hashrate</p>
+                            <h3 class="card-title"><small><span id="networkHashrate">-</span></small></h3>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                <i class="material-icons text-orange"></i>
+                                <a>Updated every 15 seconds</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="card card-stats">
+                        <div class="card-header card-header-success card-header-icon">
+                            <div class="card-icon">
+                                <i class="material-icons">people</i></div>
+                            <p class="card-category">Miners</p>
+                            <h3 class="card-title"><small><span id="minerCount">-</span></small></h3>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                <i class="material-icons text-orange"></i>
+                                <a>Updated every 15 seconds</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="card card-stats">
+                        <div class="card-header card-header-success card-header-icon">
+                            <div class="card-icon">
+                                <i class="fas fa-hammer"></i></div>
+                            <p class="card-category">Network Diff</p>
+                            <h3 class="card-title"><small><span id="networkDiff">-</span></small></h3>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                <i class="material-icons text-orange"></i>
+                                <a>Updated every 15 seconds</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="card card-stats">
+                        <div class="card-header card-header-success card-header-icon">
+                            <div class="card-icon">
+                                <i class="material-icons">trending_up</i></div>
+                            <p class="card-category">Pool Hashrate</p>
+                            <h3 class="card-title"><small><span id="poolHashratestring">-</span></small></h3>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                <i class="material-icons text-orange"></i>
+                                <<a>Updated every 15 seconds</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+        <div id="topCharts">
+            <div class="chartWrapper">
+                <div class="chartLabel">Pool Historical Hashrate</div>
+                <div class="chartHolder"><svg id="poolHashrate"></div>
+            </div>
+        </div>
+        {{ function capitalizeFirstLetter(t){return t.charAt(0).toUpperCase()+t.slice(1)} }}
+        {{ function readableDate(a){ return new Date(parseInt(a)).toString(); } }}
+    
+                    {{ for(var pool in it.stats.pools){ }}
+                    {{ var blockscomb = new Array; }}
+                            <div class="container-fluid">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <div class="card">
+                                    <div class="card-header card-header-primary">
+                                      <h4 class="card-title "> Blocks Found</h4>
+                                    </div>
+                                    <div class="card-body">
+                                      <div class="table-responsive">
+                                        <table class="table">
+                                          <thead class=" text-primary">
+                                                    <th>Block Number</th>
+                                                    <th>Time Found</th>
+                                                    <th>Mined By</th>
+                                                    <th>Confirmations</th>
+                                            </thead>
+                                            <tbody>
+                                                {{ for(var b in it.stats.pools[pool].pending.blocks) { }}
+                                                {{ var block = it.stats.pools[pool].pending.blocks[b].split(":"); }}
+    
+                                                <tr>
+                                                    <td><a
+                                                            href="{{=it.poolsConfigs[pool].coin.explorer.blockURL + block[0]}}" />{{=block[2]}}</a>
+                                                    </td>
+                                                    <td>{{if (isNaN(block[4])) {  }} {{=readableDate(block[5])}}
+                                                        {{ } else { }}
+                                                        {{=readableDate(block[4])}} {{ }}}</td>
+                                                    <td><a
+                                                            href="/workers/{{=block[3].split('.')[0]}}">{{=block[3].split('.')[1]}}</a>
+                                                    </td>
+                                                    {{if (it.stats.pools[pool].pending.confirms) { }}
+                                                    {{if (it.stats.pools[pool].pending.confirms[block[0]] <= it.poolsConfigs[pool].coin.poolOptions.confirmations) { }}
+                                                    {{if (parseFloat(it.stats.pools[pool].pending.confirms[block[0]]/it.poolsConfigs[pool].coin.poolOptions.confirmations*100).toFixed(2) <= 20) { var confPadding = 20 } else { var confPadding = parseFloat(it.stats.pools[pool].pending.confirms[block[0]]/it.poolsConfigs[pool].coin.poolOptions.confirmations*100).toFixed(2)  } }}
+    
+                                                    <td>
+                                                        <div class="progress progress-lg mb-10 ">
+                                                            <div class="progress-bar progress-bar-info active progress-bar-striped"
+                                                                aria-valuemin="0%" aria-valuemax="100%"
+                                                                style="width: {{=confPadding}}%; background: #2b2b3b; font-size: 11px;"
+                                                                role="progressbar">
+                                                                {{=parseFloat(it.stats.pools[pool].pending.confirms[block[0]]/it.poolsConfigs[pool].coin.poolOptions.confirmations*100).toFixed(2)}}%
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    {{ } else if (it.stats.pools[pool].pending.confirms[block[0]] >= it.poolsConfigs[pool].coin.poolOptions.confirmations && it.stats.pools[pool].pending.confirms[block[0]] <= it.poolsConfigs[pool].coin.poolOptions.confirmations + 25 && it.stats.pools[pool].name != "safecoin") { }}
+                                                    <td>
+                                                        <div class="progress progress-lg mb-10 ">
+                                                            <div class="progress-bar progress-bar-info active progress-bar-striped"
+                                                                aria-valuemin="0%" aria-valuemax="100%"
+                                                                style="width: 100%; background:#2b2b3b; font-size: 11px;"
+                                                                role="progressbar"> Shielding Payment! </div>
+                                                        </div>
+                                                    </td>
+                                                    {{ } else if (it.stats.pools[pool].pending.confirms[block[0]] >= it.poolsConfigs[pool].coin.poolOptions.confirmations + 26) { }}
+                                                    <td>
+                                                        <div class="progress progress-lg mb-10 ">
+                                                            <div class="progress-bar progress-bar-info active progress-bar-striped"
+                                                                aria-valuemin="0%" aria-valuemax="100%"
+                                                                style="width: 100%;  background:#2b2b3b; font-size: 11px;"
+                                                                role="progressbar"> Payment Pending! </div>
+                                                        </div>
+                                                    </td>
+                                                    {{ } else { }}
+                                                    <td>
+                                                        <div class="progress progress-lg mb-10 ">
+                                                            <div class="progress-bar progress-bar-info active progress-bar-striped"
+                                                                aria-valuemin="0%" aria-valuemax="100%"
+                                                                style="width: 20%;  background:#2b2b3b; font-size: 11px;"
+                                                                role="progressbar"> 1.00% </div>
+                                                        </div>
+                                                    </td>
+    
+                                                    {{ } }}
+                                                    {{ } }}
+                                                </tr>
+                                                {{blockscomb.push(block);}}
+                                                {{ } }}
+                                                {{ var i=0; for(var b in it.stats.pools[pool].confirmed.blocks) { }}
+                                                {{ if (i < 60) { i++; }}
+                                                {{ var block = it.stats.pools[pool].confirmed.blocks[b].split(":"); }}
+                                                <tr>
+                                                    <td><a
+                                                            href="{{=it.poolsConfigs[pool].coin.explorer.blockURL + block[0]}}" />{{=block[2]}}</a>
+                                                    </td>
+                                                    <td>{{if (isNaN(block[4])) {  }} {{=readableDate(block[5])}}
+                                                        {{ } else { }}
+                                                        {{=readableDate(block[4])}} {{ }}}</td>
+                                                    <td><a
+                                                            href="/workers/{{=block[3].split('.')[0]}}">{{=block[3].split('.')[1]}}</a>
+                                                    </td>
+                                                    <td>
+                                                        <div class="progress progress-lg mb-10 ">
+                                                            <div class="progress-bar progress-bar-info " aria-valuemin="0%"
+                                                                aria-valuemax="100%"
+                                                                style="width: 100%;  background:#4b4b58; font-size: 11px;"
+                                                                role="progressbar"> Payment Sent!</div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+    
+                                                {{blockscomb.push(block);}}
+                                                {{ } }}
+                                                {{ } }}
+                                                <!--{{=JSON.stringify(blockscomb)}}-->
+                                                <script>
+                                                    var blockscomb = ({{=JSON.stringify(blockscomb)}})
+                                                </script>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      
+                    <script>
+    
+                        var groupedByFinder = {};
+                        var data = [];
+    
+                        for (var i = 0; i < blockscomb.length; i++) {
+                            finder = blockscomb[i][3]; // if other doesn 't already have a property for the current letter
+                            // create it and assign it to a new empty array
+                            if (!(finder in groupedByFinder))
+                                groupedByFinder[finder] = [];
+    
+                            groupedByFinder[finder].push(blockscomb[i]);
+                        }
+    
+                        Object.keys(groupedByFinder).forEach(function (i) {
+                            var obj = {};
+                            obj.label = i
+                            obj.value = groupedByFinder[i].length
+                            data.push(obj)
+                        });
+    
+                        console.log(JSON.stringify(data))
+    
+                        var w = 400;
+                        var h = 400;
+                        var r = h / 2;
+                        var legendRectSize = 18;
+                        var legendSpacing = 5;
+    
+                        var color = d3.scale.category20c();
+                        var div = d3.select("#pie{{=pool}}").append("div")
+                            .attr("class", "tooltip")
+                            .style("opacity", 0);
+    
+                        var vis = d3.select('#blocksPie{{=pool}}')
+                            .data([data])
+                            .attr("width", 1000)
+                            .attr("height", h)
+                            .attr("style", "display: block; margin: auto;")
+                            .attr("preserveAspectRatio", "xMidYMin")
+                            .append("svg:g")
+                            .attr("transform", "translate(" + r + "," + r + ")");
+    
+    
+                        var pie = d3.layout.pie().value(function (d) { return d.value; });
+    
+                        // declare an arc generator function
+                        var arc = d3.svg.arc().outerRadius(r);
+    
+                        // select paths, use arc generator to draw
+                        var arcs = vis.selectAll("g.slice{{=pool}}")
+                            .data(pie)
+                            .enter()
+                            .append("svg:g")
+                            .attr("class", "slice{{=pool}}")
+                            .attr("id", "slice")
+                            .on("mouseover", function (d) {
+                                d3.select("#tooltip{{=pool}}")
+                                    .style("left", d3.event.pageX + "px")
+                                    .style("top", d3.event.pageY + "px")
+                                    .style("opacity", 1)
+                                    .select("#value{{=pool}}")
+                                    .text(d.data.value);
+                                d3.select("#tooltip{{=pool}}")
+                                    .select("#finderr{{=pool}}")
+                                    .text(d.data.label);
+                            });
+    
+                        arcs.append("svg:path")
+                            .attr("fill", function (d, i) {
+                                return color(i);
+                            })
+                            .attr("d", function (d) {
+                                return arc(d);
+                            });
+    
+                        var legend = vis.selectAll('.legend')
+                            .data(color.domain())
+                            .enter()
+                            .append('g')
+                            .attr('class', 'legend')
+                            .attr('id', {{=JSON.stringify(pool) }})
+        .attr('transform', function (d, i) {
+                                var height = legendRectSize + legendSpacing;
+                                var offset = height * color.domain().length / 2;
+                                var horz = 12 * legendRectSize;
+                                var vert = i * height;
+                                return 'translate(' + horz + ',' + vert + ')';
+                            });
+    
+                        legend.append('rect')
+                            .attr('width', legendRectSize)
+                            .attr('height', legendRectSize)
+                            .style('fill', color)
+                            .style('stroke', color);
+    
+                        legend.append('text')
+                            .attr('x', legendRectSize + legendSpacing)
+                            .attr('y', legendRectSize - legendSpacing)
+                            .text(function (d, i) {
+                                return data[i].label;
+                            });
+                    </script>
+                    {{ } }}
+    
+                    <script>
+                        document.querySelector('main').appendChild(document.createElement('script')).src = '/static/stats.js';
+                    </script>
+    
+    
+                    <script>
+                        window.statsSource = new EventSource("/api/live_stats");
+                        $(function () {
+                            statsSource.addEventListener('message', function (e) {
+                                var stats = JSON.parse(e.data);
+                                for (var pool in stats.pools) {
+                                    $('#statsMiners' + pool).text(stats.pools[pool].minerCount);
+                                    $('#statsWorkers' + pool).text(stats.pools[pool].workerCount);
+                                    $('#statsHashrate' + pool).text(stats.pools[pool].hashrateString);
+                                    $('#statsHashrateAvg' + pool).text(getReadableHashRateString(calculateAverageHashrate(pool)));
+                                    $('#statsLuckDays' + pool).text(stats.pools[pool].luckDays);
+                                    $('#statsValidBlocks' + pool).text(stats.pools[pool].poolStats.validBlocks);
+                                    $('#statsTotalPaid' + pool).text((parseFloat(stats.pools[pool].poolStats.totalPaid)).toFixed(8));
+                                    $('#statsNetworkBlocks' + pool).text(stats.pools[pool].poolStats.networkBlocks);
+                                    $('#statsNetworkDiff' + pool).text(stats.pools[pool].poolStats.networkDiff);
+                                    $('#statsNetworkSols' + pool).text(getReadableNetworkHashRateString(stats.pools[pool].poolStats.networkSols));
+                                    $('#statsNetworkConnections' + pool).text(stats.pools[pool].poolStats.networkConnections);
+                                }
+                            });
+                        });
+    
+                        function getReadableNetworkHashRateString(hashrate) {
+                            hashrate = (hashrate * 1000000);
+                            if (hashrate < 1000000)
+                                return '0 Sol';
+                            var byteUnits = [' Sol/s', ' KSol/s', ' MSol/s', ' GSol/s', ' TSol/s', ' PSol/s'];
+                            var i = Math.floor((Math.log(hashrate / 1000) / Math.log(1000)) - 1);
+                            hashrate = (hashrate / 1000) / Math.pow(1000, i + 1);
+                            return hashrate.toFixed(2) + byteUnits[i];
+                        }
+                    </script>
+    
+                    <script>
+                        function getpoolStats() {
+    
+                            $.ajax({
+                                url: '/api/stats',
+                                dataType: 'json',
+                                success: function (data) {
+                                    //loop all keys
+                                    for (var pool in data.pools) {
+                                        var minercount = data.pools.vidulum.minerCount;
+                                        var networkHashrate = data.pools.vidulum.poolStats.networkSolsString;
+                                        var networkdiff = data.pools.vidulum.poolStats.networkDiff;
+                                        var poolhashrate = data.pools.vidulum.hashrateString;
+                                        $('#minerCount').text(minercount);
+                                        $('#networkHashrate').text(networkHashrate);
+                                        $('#networkDiff').text((parseFloat(networkdiff)).toFixed(2));
+                                        $('#poolHashratestring').text(poolhashrate);
+                                        console.log(networkdiff);
+                                        console.log(poolhashrate);
+                                    }
+                                }
+                            });
+                        }
+                        getpoolStats();
+                    </script>
+                                <script>                                                        
+    function getconnectioninfo() {
+    
+                                $.ajax({
+                                    url: '/api/config',
+                                    dataType: 'json',
+                                    success: function (data) {
+                                        console.log(data)
+                                        console.log(data.vidulum.ports)
+                                        //loop all keys
+                                        var ports = data.vidulum.ports;
+                                        for (var port in ports) {
+                                                        var stratumhost = data.vidulum.host;
+                                                        var connectionports = ports.port;
+                                                        var algopers = data.vidulum.pers;
+    
+                                                        $('#stratumHost').text(stratumhost);
+                                                        $('#connectionPorts').text(connectionports);
+                                                        $('#algoPers').text(algopers);
+    console.log(connectionports)
+                                        }
+    
+                                    }
+                                });
+                            }
+                            getconnectioninfo();                                  
+                        </script>                                                   
+                    <script>                                                        
+                            $(document).ready(function() {                          
+                               $("#MyModal").modal();                               
+                               $('#myModal').on('shown.bs.modal', function() {      
+                                  $('#myInput').focus();                            
+                               });                                                  
+                            });                                                     
+                          </script>
+    

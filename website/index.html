@@ -1,0 +1,201 @@
+
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Blockify Mining Pools</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <link rel="shortcut icon" type="image/png" href="/static/assets/img/header.png"/>
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <!-- Material Kit CSS -->
+  <link href="/static/assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.4.2/pure-min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.5/d3.min.js"></script>
+  <script src="/static/nvd3.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/static/nvd3.css">
+  <script src="/static/main.js"></script>
+</head>
+
+<body>
+  <div class="wrapper ">
+    <div class="sidebar" data-color="azure" data-background-color="white">
+      <!--
+      Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
+      Tip 2: you can also add an image using data-image tag
+  -->
+      <div class="logo">
+        <a href="/" class="simple-text logo-normal" style="text-decoration: none;"> 
+          <img src="/static/assets/img/header.png" height="42" width="42"> &nbsp Blockify 
+        </a>
+      </div>
+      <div class="sidebar-wrapper">
+        <ul class="nav">
+		<li class="{{? it.selected === 'tbs' }}pure-menu-selected{{?}}">
+            <a class="nav-link" href="/">
+				<i class="material-icons">dashboard</i>&nbsp;
+                    Dashboard
+            </a>
+          </li>
+<!-- 		 <li class="{{? it.selected === 'getting_started' }}pure-menu-selected{{?}}">
+            <a class="nav-link" href="/getting_started"">
+				<i class="fa fa-rocket"></i>&nbsp;
+                    Getting Started
+            </a>
+          </li>
+		  <li class="{{? it.selected === 'stats' }}pure-menu-selected{{?}}">
+            <a class="nav-link" href="/stats"">
+				<i class="fa fa-bar-chart-o"></i>&nbsp;
+                    Graph Stats
+            </a>
+          </li>
+		  <li class="{{? it.selected === 'tbs' }}pure-menu-selected{{?}}">
+            <a class="nav-link" href="/tbs"">
+				<i class="fa fa-table"></i>&nbsp;
+                    Tab Stats
+            </a>
+          </li> -->
+		  <li class="{{? it.selected === 'tbs' }}pure-menu-selected{{?}}">
+            <a class="nav-link" href="/workers"">
+				<i class="fa fa-cogs"></i>&nbsp;
+                    Workers Stats
+            </a>
+          </li>
+          <li class="{{? it.selected === 'tbs' }}pure-menu-selected{{?}}">
+            <a class="nav-link" href="/test">
+                <i class="fab fa-bitcoin"></i>&nbsp;
+                      Test
+            </a>
+        </li>
+          <!-- your sidebar here -->
+        </ul>
+      </div>
+    </div>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button"  data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+          </button>
+        </div>
+      </nav>
+      <div class="">
+        <ul class="navbar-nav">
+          <div class="dropdown" style="margin-left:87.5%; margin-top:1%;">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Select Pool
+            </button>
+            <div id="poolList" class="dropdown-menu" aria-labelledby="dropdownMenuButton">      
+            </div>
+          </div>
+          <!-- your navbar here -->
+        </ul>
+      </div>
+      <!-- End Navbar -->
+      <div class="content" style="margin-top:-1%">
+        <div class="container-fluid">
+          <!-- your content here -->
+		 <main>
+			{{=it.page}}
+		</main>
+        </div>
+      </div>
+      <footer class="footer">
+        <div class="container-fluid">
+          <nav class="float-left">
+            <ul>
+              <li>
+                <a href="https://www.creative-tim.com">
+                  Creative Tim
+                </a>
+              </li>
+            </ul>
+          </nav>
+         <div class="copyright float-right">
+            &copy;
+            <script>
+              document.write(new Date().getFullYear())
+            </script>, made with <i class="material-icons">favorite</i> by
+            <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+          </div>
+         <!-- your footer here --> 
+        </div>
+      </footer>
+    </div>
+  </div>
+</body>
+<!-- JS code -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js">
+</script>
+
+<!-- JS code -->
+  <script>
+      function showHideCoin(caller) {
+        $('.coinpage').each(function (i, obj) {
+          if ($(obj).attr('id') === caller) {
+            obj.style.display = "block";
+          } else {
+            obj.style.display = "none";
+          }
+        });
+      }
+    </script>
+<script>
+  $.ajax({
+    Method: 'GET',
+    url: "/api/stats",
+    dataType: 'json',
+    success: function (data) {
+      //console.log(data);
+      for (var pool in data.pools) {
+        var symbol = data.pools[pool].symbol;
+        var poolname = data.pools[pool].name;
+        console.log(poolname)
+        
+        $("#poolList").append('<a id="'+poolname+'" class="dropdown-item" style="cursor: pointer;";  onclick="showHideCoin(\''+ poolname +'\')"><span>'+poolname+'</span></a>');
+      }
+	  if(data.pools.length > 1) 
+	  {
+		
+	  }
+    }
+
+  });
+
+  function getReadableNetworkHashRateString(hashrate) {
+    hashrate = (hashrate * 1000000);
+    if (hashrate < 1000000)
+      return '0 Sol';
+    var byteUnits = [' Sol/s', ' KSol/s', ' MSol/s', ' GSol/s', ' TSol/s', ' PSol/s'];
+    var i = Math.floor((Math.log(hashrate / 1000) / Math.log(1000)) - 1);
+    hashrate = (hashrate / 1000) / Math.pow(1000, i + 1);
+    return hashrate.toFixed(2) + byteUnits[i];
+  }
+</script>
+<!-- JS code -->
+<script>
+  $(".dropdown-menu a").click(function () {
+    $(this).closest(".dropdown-menu").prev().dropdown("toggle");
+  });
+</script>
+</html>
